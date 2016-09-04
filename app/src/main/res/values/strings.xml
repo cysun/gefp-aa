@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GEFP</string>
+    <string name="login_text">
+        Welcome to GEFP Mobile. Please use your campus AD account to login.
+    </string>
+    <string name="toast_login_success">Login successful!</string>
+    <string name="toast_login_failure">Login failed!</string>
 </resources>
