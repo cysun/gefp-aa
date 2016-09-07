@@ -3,6 +3,10 @@ package csula.edu.gefp.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * We only persist immutable user fields such as cin, username, and access key. Other user fields
+ * are dynamically loaded on the profile page.
+ */
 public class UserData {
 
     private static UserData userData;
@@ -31,17 +35,18 @@ public class UserData {
     public void clear() {
         user = null;
 
-        SharedPreferences.Editor editor = context.getSharedPreferences("csns",
+        SharedPreferences.Editor editor = context.getSharedPreferences("gefp",
                 Context.MODE_PRIVATE).edit();
         editor.remove("user.access.key");
         editor.remove("user.first.name");
         editor.remove("user.last.name");
         editor.remove("user.username");
+        editor.remove("user.cin");
         editor.apply();
     }
 
     private void fromPreferences() {
-        SharedPreferences preferences = context.getSharedPreferences("csns",
+        SharedPreferences preferences = context.getSharedPreferences("gefp",
                 Context.MODE_PRIVATE);
 
         if (!preferences.contains("user.access.key")) {
@@ -54,6 +59,7 @@ public class UserData {
         user.firstName = preferences.getString("user.first.name", null);
         user.lastName = preferences.getString("user.last.name", null);
         user.username = preferences.getString("user.username", null);
+        user.cin = preferences.getString("user.cin", null);
     }
 
     private void toPreferences() {
@@ -64,6 +70,7 @@ public class UserData {
         editor.putString("user.first.name", user.firstName);
         editor.putString("user.last.name", user.lastName);
         editor.putString("user.username", user.username);
+        editor.putString("user.cin", user.cin);
         editor.apply();
     }
 

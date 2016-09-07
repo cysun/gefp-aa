@@ -1,5 +1,6 @@
 package csula.edu.gefp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,9 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startDefaultActivity() {
-        // startActivity( new Intent( getApplicationContext(),
-        //         NewsListActivity.class ) );
-
+        startActivity(new Intent(getApplicationContext(), StagesActivity.class));
         // Close this activity and remove it from the activity stack so
         // the user cannot get back to it by clicking the Back button.
         finish();

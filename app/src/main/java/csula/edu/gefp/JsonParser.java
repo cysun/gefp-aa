@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import csula.edu.gefp.model.Department;
+import csula.edu.gefp.model.FlightPlan;
+import csula.edu.gefp.model.Runway;
+import csula.edu.gefp.model.Stage;
 import csula.edu.gefp.model.User;
 
 /**
@@ -71,6 +74,50 @@ public class JsonParser {
         return user.isValidLogin() ? user : null;
     }
 
+    public FlightPlan getFlightPlan() throws IOException {
+        reader.beginObject(); // start of the result object
+        reader.nextName();
+        reader.beginObject(); // start of the plan object
+        FlightPlan plan = new FlightPlan();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "id":
+                    plan.setId(reader.nextLong());
+                    break;
+                case "name":
+                    plan.setName(reader.nextString());
+                    break;
+                case "seasonYear":
+                    plan.setSeasonYear(reader.nextString());
+                    break;
+                case "seasonName":
+                    plan.setSeasonName(reader.nextString());
+                    break;
+                case "department":
+                    plan.setDepartment(getDepartment());
+                    break;
+                case "runways":
+                    reader.beginArray();
+                    while (reader.hasNext())
+                        plan.getRunways().add(getRunway());
+                    reader.endArray();
+                    break;
+                case "stages":
+                    reader.beginArray();
+                    while (reader.hasNext())
+                        plan.getStages().add(getStage());
+                    reader.endArray();
+                    break;
+                default:
+                    reader.skipValue();
+            }
+        }
+        reader.endObject(); // end of the flight plan object
+        reader.endObject(); // end of the result object
+        return plan.getId() != null ? plan : null;
+    }
+
     private Department getDepartment() throws IOException {
         Department department = new Department();
         reader.beginObject();
@@ -89,6 +136,46 @@ public class JsonParser {
         }
         reader.endObject();
         return department;
+    }
+
+    private Runway getRunway() throws IOException {
+        Runway runway = new Runway();
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "id":
+                    runway.setId(reader.nextLong());
+                    break;
+                case "name":
+                    runway.setName(reader.nextString());
+                    break;
+                default:
+                    reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return runway;
+    }
+
+    private Stage getStage() throws IOException {
+        Stage stage = new Stage();
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "id":
+                    stage.setId(reader.nextLong());
+                    break;
+                case "name":
+                    stage.setName(reader.nextString());
+                    break;
+                default:
+                    reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return stage;
     }
 
 }

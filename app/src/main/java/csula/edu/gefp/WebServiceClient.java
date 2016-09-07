@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import csula.edu.gefp.model.FlightPlan;
 import csula.edu.gefp.model.User;
 
 public class WebServiceClient {
@@ -28,7 +29,7 @@ public class WebServiceClient {
 
     public static User login(String username, String password) {
         String url = BASE_URL + "login.html";
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("username", username);
         params.put("password", password);
 
@@ -37,9 +38,24 @@ public class WebServiceClient {
             JsonParser result = getResult(url, params);
             user = result.getUser();
         } catch (IOException e) {
-            Log.e("WebServiceClient:login", "Login Error", e);
+            Log.e("WebServiceClient", "Login Error", e);
         }
         return user;
+    }
+
+    public static FlightPlan getFlightPlan(String userId) {
+        String url = BASE_URL + "userplan.html";
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+
+        FlightPlan flightPlan = null;
+        try {
+            JsonParser result = getResult(url, params);
+            flightPlan = result.getFlightPlan();
+        } catch (IOException e) {
+            Log.e("WebServiceClient", "Flight Plan Error", e);
+        }
+        return flightPlan;
     }
 
 }
