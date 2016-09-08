@@ -17,14 +17,17 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="sun.calstatela.edu"
                     android:pathPrefix="/gefp"
                     android:scheme="http" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StagesActivity"></activity>
+        <activity android:name=".StagesActivity" />
+        <activity android:name=".CellActivity"></activity>
     </application>
 
 </manifest>

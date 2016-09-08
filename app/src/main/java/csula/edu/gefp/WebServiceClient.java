@@ -15,28 +15,34 @@ import csula.edu.gefp.model.User;
 public class WebServiceClient {
 
     // private static final String BASE_URL = "http://sun.calstatela.edu/gefp/api/";
-    private static final String BASE_URL = "http://10.0.2.2:8080/gefp/api/";
+    public static final String BASE_URL = "http://10.0.2.2:8080/gefp/api/";
 
-    public static JsonParser getResult(String url, Map<String, String> params) throws IOException {
-        Uri.Builder uriBuilder = Uri.parse(url).buildUpon();
+    public static final String ENDPOINT_LOGIN = "login.html";
+    public static final String ENDPOINT_PLAN = "userplan.html";
+    public static final String ENDPOINT_CELL = "mobile-user-plan.html";
+
+    public static URL buildUrl(String endpoint, Map<String, String> params) throws IOException {
+        Uri.Builder uriBuilder = Uri.parse(BASE_URL + endpoint).buildUpon();
         if (params != null)
             for (Map.Entry<String, String> param : params.entrySet())
                 uriBuilder.appendQueryParameter(param.getKey(), param.getValue());
+        return new URL(uriBuilder.build().toString());
+    }
 
-        HttpURLConnection connection = (HttpURLConnection) (new URL(uriBuilder.build().toString())).openConnection();
+    public static JsonParser getJson(String endpoint, Map<String, String> params) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) (buildUrl(endpoint, params)).openConnection();
         return new JsonParser(connection.getInputStream());
     }
 
     public static User login(String username, String password) {
-        String url = BASE_URL + "login.html";
         Map<String, String> params = new HashMap<>();
         params.put("username", username);
         params.put("password", password);
 
         User user = null;
         try {
-            JsonParser result = getResult(url, params);
-            user = result.getUser();
+            JsonParser json = getJson(ENDPOINT_LOGIN, params);
+            user = json.getUser();
         } catch (IOException e) {
             Log.e("WebServiceClient", "Login Error", e);
         }
@@ -44,14 +50,13 @@ public class WebServiceClient {
     }
 
     public static FlightPlan getFlightPlan(String userId) {
-        String url = BASE_URL + "userplan.html";
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
 
         FlightPlan flightPlan = null;
         try {
-            JsonParser result = getResult(url, params);
-            flightPlan = result.getFlightPlan();
+            JsonParser json = getJson(ENDPOINT_PLAN, params);
+            flightPlan = json.getFlightPlan();
         } catch (IOException e) {
             Log.e("WebServiceClient", "Flight Plan Error", e);
         }

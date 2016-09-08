@@ -1,5 +1,6 @@
 package csula.edu.gefp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,12 +36,26 @@ public class StagesActivity extends AppCompatActivity {
         (new FlightPlanTask()).execute(UserData.getInstance(this).getUser().getId().toString());
     }
 
-    private class StageHolder extends RecyclerView.ViewHolder {
-        public TextView stageNameText;
+    private class StageHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private Stage stage;
+        private TextView stageNameText;
 
         public StageHolder(View itemView) {
             super(itemView);
             stageNameText = (TextView) itemView.findViewById(R.id.stageNameText);
+            stageNameText.setOnClickListener(this);
+        }
+
+        public void setStage(Stage stage) {
+            this.stage = stage;
+            stageNameText.setText(stage.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(StagesActivity.this, CellActivity.class);
+            intent.putExtra("STAGE_ID", stage.getId());
+            startActivity(intent);
         }
     }
 
@@ -49,10 +64,6 @@ public class StagesActivity extends AppCompatActivity {
 
         public StagesAdapter() {
             stages = new ArrayList<>();
-        }
-
-        public List<Stage> getStages() {
-            return stages;
         }
 
         public void setStages(List<Stage> stages) {
@@ -68,8 +79,7 @@ public class StagesActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(StageHolder holder, int position) {
-            Stage stage = stages.get(position);
-            holder.stageNameText.setText(stage.getName());
+            holder.setStage(stages.get(position));
         }
 
         @Override
