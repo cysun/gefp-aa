@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,6 +42,13 @@ public class CellActivity extends AppCompatActivity {
 
                 WebView cellWebView = (WebView) layout.findViewById(R.id.cellWebView);
                 cellWebView.getSettings().setJavaScriptEnabled(true);
+                cellWebView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        view.loadUrl(url);
+                        return false;
+                    }
+                });
                 User user = UserData.getInstance(CellActivity.this).getUser();
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", user.getId().toString());
@@ -76,4 +84,5 @@ public class CellActivity extends AppCompatActivity {
             }
         });
     }
+
 }
