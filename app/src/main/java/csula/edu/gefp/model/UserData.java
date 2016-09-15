@@ -37,40 +37,49 @@ public class UserData {
 
         SharedPreferences.Editor editor = context.getSharedPreferences("gefp",
                 Context.MODE_PRIVATE).edit();
+        editor.remove("user.id");
         editor.remove("user.access.key");
         editor.remove("user.first.name");
         editor.remove("user.last.name");
-        editor.remove("user.username");
         editor.remove("user.cin");
+        editor.remove("user.email");
+        editor.remove("user.major.id");
+        editor.remove("user.major.name");
         editor.apply();
     }
 
-    private void fromPreferences() {
+    public void fromPreferences() {
         SharedPreferences preferences = context.getSharedPreferences("gefp",
                 Context.MODE_PRIVATE);
 
-        if (!preferences.contains("user.access.key")) {
+        if (!preferences.contains("user.id") || !preferences.contains("user.access.key")) {
             user = null;
             return;
         }
 
         user = new User();
+        user.id = preferences.getLong("user.id", 0);
         user.accessKey = preferences.getString("user.access.key", null);
         user.firstName = preferences.getString("user.first.name", null);
         user.lastName = preferences.getString("user.last.name", null);
-        user.username = preferences.getString("user.username", null);
         user.cin = preferences.getString("user.cin", null);
+        user.email = preferences.getString("user.email", null);
+        user.major.id = preferences.getInt("user.major.id", 0);
+        user.major.name = preferences.getString("user.major.name", null);
     }
 
-    private void toPreferences() {
+    public void toPreferences() {
         SharedPreferences.Editor editor = context.getSharedPreferences("csns",
                 Context.MODE_PRIVATE).edit();
 
+        editor.putLong("user.id", user.id);
         editor.putString("user.access.key", user.accessKey);
         editor.putString("user.first.name", user.firstName);
         editor.putString("user.last.name", user.lastName);
-        editor.putString("user.username", user.username);
         editor.putString("user.cin", user.cin);
+        editor.putString("user.email", user.email);
+        editor.putInt("user.major.id", user.major.id);
+        editor.putString("user.major.name", user.major.name);
         editor.apply();
     }
 

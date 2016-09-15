@@ -4,19 +4,25 @@ public class User {
 
     Long id;
 
-    String username, accessKey;
-
-    String firstName, lastName, middleName;
-
-    String cin, email;
+    String accessKey, firstName, lastName, cin, email;
 
     Department major;
 
-    boolean newAccount = false;
-
-    boolean validLogin = false;
+    boolean validLogin;
 
     public User() {
+        validLogin = false;
+        major = new Department();
+    }
+
+    public void copyTo(User another) {
+        another.id = id;
+        another.accessKey = accessKey;
+        another.firstName = firstName;
+        another.lastName = lastName;
+        another.cin = cin;
+        another.email = email;
+        major.copyTo(another.major);
     }
 
     public Long getId() {
@@ -25,14 +31,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getAccessKey() {
@@ -59,14 +57,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
     public String getCin() {
         return cin;
     }
@@ -89,14 +79,6 @@ public class User {
 
     public void setMajor(Department major) {
         this.major = major;
-    }
-
-    public boolean isNewAccount() {
-        return newAccount;
-    }
-
-    public void setNewAccount(boolean newAccount) {
-        this.newAccount = newAccount;
     }
 
     public boolean isValidLogin() {

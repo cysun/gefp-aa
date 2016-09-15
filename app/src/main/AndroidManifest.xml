@@ -27,7 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".StagesActivity" />
-        <activity android:name=".CellActivity"></activity>
+        <activity
+            android:name=".CellActivity"
+            android:parentActivityName=".StagesActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".StagesActivity" />
     </application>
 
 </manifest>

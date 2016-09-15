@@ -6,6 +6,18 @@ public class Department {
 
     String name;
 
+    public Department() {
+    }
+
+    public void copyTo(Department another) {
+        another.id = id;
+        another.name = name;
+    }
+
+    public String toString() {
+        return name;
+    }
+
     public int getId() {
         return id;
     }

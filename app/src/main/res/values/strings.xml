@@ -5,6 +5,8 @@
     </string>
     <string name="toast_login_success">Login successful!</string>
     <string name="toast_login_failure">Login failed!</string>
+    <string name="toast_profile_success">Profile Updated!</string>
+    <string name="toast_profile_failure">Failed to update profile!</string>
     <string name="menu_item_profile">Profile</string>
     <string name="menu_item_logout">Logout</string>
 </resources>

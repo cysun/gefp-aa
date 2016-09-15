@@ -56,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 msg = getResources().getString(R.string.toast_login_success);
                 startDefaultActivity();
             }
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
         }
     }
 

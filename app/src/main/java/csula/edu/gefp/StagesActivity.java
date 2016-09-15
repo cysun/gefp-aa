@@ -49,6 +49,9 @@ public class StagesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_item_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
             case R.id.menu_item_logout:
                 UserData.getInstance(this).clear();
                 Intent intent = new Intent(StagesActivity.this, LoginActivity.class);

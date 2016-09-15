@@ -5,6 +5,8 @@ import android.util.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import csula.edu.gefp.model.Department;
 import csula.edu.gefp.model.FlightPlan;
@@ -35,9 +37,6 @@ public class JsonParser {
                 case "id":
                     user.setId(reader.nextLong());
                     break;
-                case "username":
-                    user.setUsername(reader.nextString());
-                    break;
                 case "accessKey":
                     user.setAccessKey(reader.nextString());
                     break;
@@ -47,9 +46,6 @@ public class JsonParser {
                 case "lastName":
                     user.setLastName(reader.nextString());
                     break;
-                case "middleName":
-                    user.setMiddleName(reader.nextString());
-                    break;
                 case "cin":
                     user.setCin(reader.nextString());
                     break;
@@ -58,9 +54,6 @@ public class JsonParser {
                     break;
                 case "major":
                     user.setMajor(getDepartment());
-                    break;
-                case "newAccount":
-                    user.setNewAccount(reader.nextBoolean());
                     break;
                 case "validLogin":
                     user.setValidLogin(reader.nextBoolean());
@@ -116,6 +109,17 @@ public class JsonParser {
         reader.endObject(); // end of the flight plan object
         reader.endObject(); // end of the result object
         return plan.getId() != null ? plan : null;
+    }
+
+    public List<Department> getDepartments() throws IOException {
+        List<Department> departments = new ArrayList<>();
+        reader.beginObject(); // start of the result object
+        reader.nextName();
+        reader.beginArray();
+        while (reader.hasNext())
+            departments.add(getDepartment());
+        reader.endArray();
+        return departments;
     }
 
     private Department getDepartment() throws IOException {
