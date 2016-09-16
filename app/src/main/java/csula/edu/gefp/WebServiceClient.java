@@ -20,7 +20,7 @@ import csula.edu.gefp.model.User;
 public class WebServiceClient {
 
     // private static final String BASE_URL = "http://sun.calstatela.edu/gefp/api/";
-    public static final String BASE_URL = "http://10.0.2.2:8080/gefp/api/";
+    private static final String BASE_URL = "http://10.0.2.2:8080/gefp/api/";
 
     public static final String ENDPOINT_LOGIN = "login.html";
     public static final String ENDPOINT_PLAN = "userplan.html";
