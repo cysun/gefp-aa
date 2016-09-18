@@ -9,8 +9,8 @@ android {
         applicationId "csula.edu.gefp"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 1
-        versionName '0.5-alpha'
+        versionCode 2
+        versionName '0.6-alpha'
     }
     buildTypes {
         release {
